@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 import os
 
 class BaseInputs:
@@ -161,7 +161,7 @@ class FileOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: str | List[str] = None,
+                 value: Union[str, List[str]] = None,
                  ):
         self.description = description
         self.required = required
@@ -188,7 +188,7 @@ class StringOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: str | List[str] = None,
+                 value: Union[str, List[str]] = None,
                  ):
         self.description = description
         self.required = required
@@ -213,7 +213,7 @@ class FloatOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: float | List[float] = None,
+                 value: Union[float, List[float]] = None,
                  ):
         self.description = description
         self.required = required
@@ -239,7 +239,7 @@ class IntegerOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: int | List[int] = None,
+                 value: Union[int, List[int]] = None,
                  ):
         self.value = value
         self.description = description
@@ -266,7 +266,7 @@ class BooleanOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: bool | List[bool] = None,
+                 value: Union[bool, List[bool]] = None,
                  ):
         self.description = description
         self.required = required
