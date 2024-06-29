@@ -1,5 +1,5 @@
 
-## 准备
+## 1. 准备
 
 下载 tong 客户端
 
@@ -11,15 +11,15 @@ wget
 
 
 
-## 验证
+## 2. 验证
 
-### 1. 方式一：使用 tong 客户端 （推荐）
+### 2.1 方式一：使用 tong 客户端 （推荐）
 ```shell
 tong validate
 
 ```
 
-### 2. 方式二：使用 docker（可选）
+### 2.2 方式二：使用 docker（可选）
 
 
 ```shell
@@ -29,7 +29,7 @@ docker run -it  --rm $ImageName  python -c "from infer import Infer, Inputs; Inf
 
 ```
 
-## 上传模型
+## 3. 上传模型
 ```
 tong push
 ```
