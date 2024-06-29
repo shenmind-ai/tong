@@ -145,7 +145,6 @@ class BooleanInput:
     def __init__(self, 
                  value: bool,
                  description: str,
-                 required: bool = True,
                  ):
         self.value = value
         self.description = description

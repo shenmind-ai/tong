@@ -31,5 +31,6 @@ docker run -it  --rm $ImageName  python -c "from infer import Infer, Inputs; Inf
 
 ## 3. 上传模型
 ```
-tong push
+export token=xxxxxxxxxxxxxxxxxxx
+tong push --token $token
 ```
