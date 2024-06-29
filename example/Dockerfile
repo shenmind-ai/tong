@@ -1,4 +1,7 @@
 FROM pytorch/pytorch
+
+RUN pip install tong==0.1.0
+
 COPY . /src
 WORKDIR /src
 
@@ -9,7 +12,7 @@ WORKDIR /src
 # Install system dependencies
 
 
-# 确保 python -c "from infer import Infer, Inputs; Infer().run_inference(Inputs())" 可以正常运行
+
 
 
 
