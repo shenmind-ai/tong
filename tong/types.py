@@ -1,4 +1,5 @@
 from typing import List
+import os
 
 class BaseInputs:
     def check(self) -> bool:
@@ -15,10 +16,12 @@ class BaseInputs:
 class BaseOutputs:
     def set_values(self, **kwargs) -> None:
         for key, value in kwargs.items():
-            if hasattr(self, key) and isinstance(getattr(self, key), BaseOutput):
+            if hasattr(self, key):
                 getattr(self, key).value = value
             else:
                 raise AttributeError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+        return self
 
     def check(self) -> bool:
         for key, output in self.__dict__.items():
@@ -28,7 +31,6 @@ class BaseOutputs:
             else:
                 output.check()
         return True
-
 
 class FileInput:
     def __init__(self, 
@@ -159,20 +161,26 @@ class FileOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: str = None,
+                 value: str | List[str] = None,
                  ):
-        self.value = value
         self.description = description
+        self.required = required
+        self.value = value
 
     def check(self) -> bool:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a string, got None")
 
-        if not isinstance(self.value, str):
-            raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
+        if isinstance(self.value, list):
+            for v in self.value:
+                if not os.path.exists(v):
+                    raise FileNotFoundError(f"File {v} not found")
+        elif isinstance(self.value, str):
+            if not os.path.exists(self.value):
+                raise FileNotFoundError(f"File {self.value} not found")
 
-        if not os.path.exists(self.value):
-            raise FileNotFoundError(f"File {self.value} not found")
+        else:
+            raise TypeError(f"Expected {self.description} to be a string or a list of strings, got {type(self.value)}")
 
         return True
 
@@ -180,17 +188,24 @@ class StringOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: str = None,
+                 value: str | List[str] = None,
                  ):
-        self.value = value
         self.description = description
+        self.required = required
+        self.value = value
 
     def check(self) -> bool:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a string, got None")
 
-        if not isinstance(self.value, str):
-            raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
+        if isinstance(self.value, list):
+            for v in self.value:
+                if not isinstance(v, str):
+                    raise TypeError(f"Expected {self.description} to be a string, got {type(v)}")
+        elif isinstance(self.value, str):
+            pass
+        else:
+            raise TypeError(f"Expected {self.description} to be a string or a list of strings, got {type(self.value)}")
 
         return True
 
@@ -198,17 +213,25 @@ class FloatOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: float = None,
+                 value: float | List[float] = None,
                  ):
-        self.value = value
         self.description = description
+        self.required = required
+        self.value = value
 
     def check(self) -> bool:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a float, got None")
 
-        if not isinstance(self.value, float):
-            raise TypeError(f"Expected {self.description} to be a float, got {type(self.value)}")
+        if isinstance(self.value, list):
+            for v in self.value:
+                if not isinstance(v, float):
+                    raise TypeError(f"Expected {self.description} to be a float, got {type(v)}")
+        elif isinstance(self.value, float):
+            pass
+        else:
+            raise TypeError(f"Expected {self.description} to be a float or a list of floats, got {type(self.value)}")
+
 
         return True
 
@@ -216,17 +239,26 @@ class IntegerOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: int = None,
+                 value: int | List[int] = None,
                  ):
         self.value = value
         self.description = description
+        self.required = required
 
     def check(self) -> bool:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be an integer, got None")
 
-        if not isinstance(self.value, int):
-            raise TypeError(f"Expected {self.description} to be an integer, got {type(self.value)}")
+        if isinstance(self.value, list):
+            for v in self.value:
+                if not isinstance(v, int):
+                    print(self.value)
+                    print(v)
+                    raise TypeError(f"Expected {self.description} to be an integer, got {type(v)}")
+        elif isinstance(self.value, int):
+            pass
+        else:
+            raise TypeError(f"Expected {self.description} to be an integer or a list of integers, got {type(self.value)}")
 
         return True
 
@@ -234,16 +266,24 @@ class BooleanOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: bool = None,
+                 value: bool | List[bool] = None,
                  ):
-        self.value = value
         self.description = description
+        self.required = required
+        self.value = value
 
     def check(self) -> bool:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a boolean, got None")
 
-        if not isinstance(self.value, bool):
-            raise TypeError(f"Expected {self.description} to be a boolean, got {type(self.value)}")
+        if isinstance(self.value, list):
+            for v in self.value:
+                if not isinstance(v, bool):
+                    raise TypeError(f"Expected {self.description} to be a boolean, got {type(v)}")
+        elif isinstance(self.value, bool):
+            pass
+        else:
+            raise TypeError(f"Expected {self.description} to be a boolean or a list of booleans, got {type(self.value)}")
+
 
         return True

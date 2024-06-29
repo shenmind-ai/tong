@@ -5,9 +5,11 @@ from .types import BaseInputs, BaseOutputs
 
 
 class BaseInfer(ABC):
+    def __init__(self) -> None:
+        self.setup()
     
     @abstractmethod
-    def setup(self, **kwargs: Any) -> None:
+    def setup(self) -> None:
         pass
 
     @abstractmethod
@@ -18,4 +20,5 @@ class BaseInfer(ABC):
         inputs.check()
         outputs = self.infer(inputs)
         outputs.check()
+
         return outputs
