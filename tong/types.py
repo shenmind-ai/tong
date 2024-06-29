@@ -161,7 +161,7 @@ class FileOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: Union[str, List[str]] = None,
+                 value: str = None,
                  ):
         self.description = description
         self.required = required
@@ -171,16 +171,31 @@ class FileOutput:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a string, got None")
 
-        if isinstance(self.value, list):
-            for v in self.value:
-                if not os.path.exists(v):
-                    raise FileNotFoundError(f"File {v} not found")
-        elif isinstance(self.value, str):
-            if not os.path.exists(self.value):
-                raise FileNotFoundError(f"File {self.value} not found")
+        if not isinstance(self.value, str):
+            raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
 
-        else:
-            raise TypeError(f"Expected {self.description} to be a string or a list of strings, got {type(self.value)}")
+        return True
+
+class FileOutputList:
+    def __init__(self, 
+                 description: str,
+                 required: bool = True,
+                 value: List[str] = None,
+                 ):
+        self.description = description
+        self.required = required
+        self.value = value
+
+    def check(self) -> bool:
+        if self.required and self.value is None:
+            raise ValueError(f"Expected {self.description} to be a list of strings, got None")
+
+        if not isinstance(self.value, list):
+            raise TypeError(f"Expected {self.description} to be a list of strings, got {type(self.value)}")
+
+        for v in self.value:
+            if not os.path.exists(v):
+                raise FileNotFoundError(f"File {v} not found")
 
         return True
 
@@ -188,7 +203,7 @@ class StringOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: Union[str, List[str]] = None,
+                 value: str = None,
                  ):
         self.description = description
         self.required = required
@@ -198,14 +213,31 @@ class StringOutput:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a string, got None")
 
-        if isinstance(self.value, list):
-            for v in self.value:
-                if not isinstance(v, str):
-                    raise TypeError(f"Expected {self.description} to be a string, got {type(v)}")
-        elif isinstance(self.value, str):
-            pass
-        else:
-            raise TypeError(f"Expected {self.description} to be a string or a list of strings, got {type(self.value)}")
+        if not isinstance(self.value, str):
+            raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
+
+        return True
+
+class StringOutputList:
+    def __init__(self, 
+                 description: str,
+                 required: bool = True,
+                 value: List[str] = None,
+                 ):
+        self.description = description
+        self.required = required
+        self.value = value
+
+    def check(self) -> bool:
+        if self.required and self.value is None:
+            raise ValueError(f"Expected {self.description} to be a list of strings, got None")
+
+        if not isinstance(self.value, list):
+            raise TypeError(f"Expected {self.description} to be a list of strings, got {type(self.value)}")
+
+        for v in self.value:
+            if not isinstance(v, str):
+                raise TypeError(f"Expected {self.description} to be a list of strings, got {type(v)}")
 
         return True
 
@@ -213,7 +245,7 @@ class FloatOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: Union[float, List[float]] = None,
+                 value: float = None,
                  ):
         self.description = description
         self.required = required
@@ -223,15 +255,31 @@ class FloatOutput:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a float, got None")
 
-        if isinstance(self.value, list):
-            for v in self.value:
-                if not isinstance(v, float):
-                    raise TypeError(f"Expected {self.description} to be a float, got {type(v)}")
-        elif isinstance(self.value, float):
-            pass
-        else:
-            raise TypeError(f"Expected {self.description} to be a float or a list of floats, got {type(self.value)}")
+        if not isinstance(self.value, float):
+            raise TypeError(f"Expected {self.description} to be a float, got {type(self.value)}")
 
+        return True
+
+class FloatOutputList:
+    def __init__(self, 
+                 description: str,
+                 required: bool = True,
+                 value: List[float] = None,
+                 ):
+        self.description = description
+        self.required = required
+        self.value = value
+
+    def check(self) -> bool:
+        if self.required and self.value is None:
+            raise ValueError(f"Expected {self.description} to be a list of floats, got None")
+
+        if not isinstance(self.value, list):
+            raise TypeError(f"Expected {self.description} to be a list of floats, got {type(self.value)}")
+
+        for v in self.value:
+            if not isinstance(v, float):
+                raise TypeError(f"Expected {self.description} to be a list of floats, got {type(v)}")
 
         return True
 
@@ -239,7 +287,7 @@ class IntegerOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: Union[int, List[int]] = None,
+                 value: int = None,
                  ):
         self.value = value
         self.description = description
@@ -249,16 +297,31 @@ class IntegerOutput:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be an integer, got None")
 
-        if isinstance(self.value, list):
-            for v in self.value:
-                if not isinstance(v, int):
-                    print(self.value)
-                    print(v)
-                    raise TypeError(f"Expected {self.description} to be an integer, got {type(v)}")
-        elif isinstance(self.value, int):
-            pass
-        else:
-            raise TypeError(f"Expected {self.description} to be an integer or a list of integers, got {type(self.value)}")
+        if not isinstance(self.value, int):
+            raise TypeError(f"Expected {self.description} to be an integer, got {type(self.value)}")
+
+        return True
+
+class IntegerOutputList:
+    def __init__(self, 
+                 description: str,
+                 required: bool = True,
+                 value: List[int] = None,
+                 ):
+        self.description = description
+        self.required = required
+        self.value = value
+
+    def check(self) -> bool:
+        if self.required and self.value is None:
+            raise ValueError(f"Expected {self.description} to be a list of integers, got None")
+
+        if not isinstance(self.value, list):
+            raise TypeError(f"Expected {self.description} to be a list of integers, got {type(self.value)}")
+
+        for v in self.value:
+            if not isinstance(v, int):
+                raise TypeError(f"Expected {self.description} to be a list of integers, got {type(v)}")
 
         return True
 
@@ -266,7 +329,7 @@ class BooleanOutput:
     def __init__(self, 
                  description: str,
                  required: bool = True,
-                 value: Union[bool, List[bool]] = None,
+                 value: bool = None,
                  ):
         self.description = description
         self.required = required
@@ -276,14 +339,30 @@ class BooleanOutput:
         if self.required and self.value is None:
             raise ValueError(f"Expected {self.description} to be a boolean, got None")
 
-        if isinstance(self.value, list):
-            for v in self.value:
-                if not isinstance(v, bool):
-                    raise TypeError(f"Expected {self.description} to be a boolean, got {type(v)}")
-        elif isinstance(self.value, bool):
-            pass
-        else:
-            raise TypeError(f"Expected {self.description} to be a boolean or a list of booleans, got {type(self.value)}")
+        if not isinstance(self.value, bool):
+            raise TypeError(f"Expected {self.description} to be a boolean, got {type(self.value)}")
 
+        return True
+
+class BooleanOutputList:
+    def __init__(self, 
+                 description: str,
+                 required: bool = True,
+                 value: List[bool] = None,
+                 ):
+        self.description = description
+        self.required = required
+        self.value = value
+
+    def check(self) -> bool:
+        if self.required and self.value is None:
+            raise ValueError(f"Expected {self.description} to be a list of booleans, got None")
+
+        if not isinstance(self.value, list):
+            raise TypeError(f"Expected {self.description} to be a list of booleans, got {type(self.value)}")
+
+        for v in self.value:
+            if not isinstance(v, bool):
+                raise TypeError(f"Expected {self.description} to be a list of booleans, got {type(v)}")
 
         return True

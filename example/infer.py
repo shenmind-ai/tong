@@ -1,4 +1,4 @@
-from tong import BaseInfer, BaseInputs, BaseOutputs, FileInput, StringInput, FloatInput, IntegerInput, FloatOutput, IntegerOutput
+from tong import BaseInfer, BaseInputs, BaseOutputs, FileInput, StringInput, FloatInput, IntegerInput, FloatOutput, IntegerOutput, FloatOutputList, IntegerOutputList
 
 import torch
 from torchvision import models, transforms
@@ -11,7 +11,7 @@ class Inputs(BaseInputs):
         self.image_path = FileInput(
                 value = "image.jpg",
                 description = "Path to the image file",
-                min_size = 1 * 1024 * 1024, # 1MB
+                min_size = 1 * 1024, # 1KB
                 max_size = 10 * 1024 * 1024, # 10MB
                 suffix = ["jpg", "jpeg", "png"],
                 )
@@ -25,11 +25,11 @@ class Inputs(BaseInputs):
 
 class Outputs(BaseOutputs):
     def __init__(self):
-        self.top3_labels = IntegerOutput(
+        self.top3_labels = IntegerOutputList(
                 description="Top 3 predicted class labels"
         )
 
-        self.top3_class_confidences = FloatOutput(
+        self.top3_class_confidences = FloatOutputList(
                 description="Top 3 predicted class confidences"
             )
 

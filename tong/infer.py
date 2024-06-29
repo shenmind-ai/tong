@@ -21,4 +21,5 @@ class BaseInfer(ABC):
         outputs = self.infer(inputs)
         outputs.check()
 
+        print("Inference complete!")
         return outputs
