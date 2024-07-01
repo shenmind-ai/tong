@@ -1,6 +1,6 @@
 FROM pytorch/pytorch
 
-RUN pip install tong==0.1.0
+RUN pip install tong
 
 COPY . /src
 WORKDIR /src
