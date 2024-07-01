@@ -4,7 +4,7 @@ from .types import BaseInputs, BaseOutputs, FileInput, StringInput, FloatInput, 
 # export all the classes
 
 __all__ = [
-    'BaseInfer'
+    'BaseInfer',
     'BaseInputs',
     'BaseOutputs',
     'FileInput',

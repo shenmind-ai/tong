@@ -68,9 +68,9 @@ class StringInput:
     def __init__(self, 
                  value: str,
                  description: str,
-                 min_length: int = 0,
-                 max_length: int = 2048, 
-                 choices: List[str] = [],
+                 min_length: int,
+                 max_length: int,
+                 choices: List[str],
                  ):
         self.value = value
         self.description = description
