@@ -39,14 +39,19 @@ class FileInput:
                  min_size: int,
                  max_size: int,
                  suffix: List[str],
+                 required = True,
                  ):
         self.value = value
         self.description = description
         self.min_size = min_size
         self.max_size = max_size
         self.suffix = suffix
+        self.required = required
 
     def check(self) -> bool:
+        if (self.value is None or self.value == "") and self.required == False:
+            return True
+
         if not isinstance(self.value, str):
             raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
 

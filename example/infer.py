@@ -14,6 +14,7 @@ class Inputs(BaseInputs):
                 min_size = 1 * 1024, # 1KB
                 max_size = 10 * 1024 * 1024, # 10MB
                 suffix = ["jpg", "jpeg", "png"],
+                required = True
                 )
 
         self.threshold = FloatInput(
