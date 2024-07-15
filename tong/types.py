@@ -87,14 +87,17 @@ class StringInput:
         if not isinstance(self.value, str):
             raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
 
-        if len(self.value) < self.min_length:
-            raise ValueError(f"Expected {self.description} to have at least {self.min_length} characters, got {len(self.value)} characters")
+        if len(choices)>0:
+            if not all([isinstance(choice, str) for choice in choices]):
+                raise TypeError(f"Expected {self.description} choices to be a list of strings, got {type(choices)}
+            if self.value not in self.choices:
+                raise ValueError(f"Expected {self.description} to be one of {self.choices}, got {self.value}")
+        else:
+            if len(self.value) < self.min_length:
+                raise ValueError(f"Expected {self.description} to have at least {self.min_length} characters, got {len(self.value)} characters")
 
-        if len(self.value) > self.max_length:
-            raise ValueError(f"Expected {self.description} to have at most {self.max_length} characters, got {len(self.value)} characters")
-
-        if len(self.choices) > 0 and self.value not in self.choices:
-            raise ValueError(f"Expected {self.description} to be one of {self.choices}, got {self.value}")
+            if len(self.value) > self.max_length:
+                raise ValueError(f"Expected {self.description} to have at most {self.max_length} characters, got {len(self.value)} characters")
 
         return True
 
