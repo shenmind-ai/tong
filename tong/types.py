@@ -39,7 +39,8 @@ class FileInput:
                  min_size: int,
                  max_size: int,
                  suffix: List[str],
-                 required = True,
+                 required: bool = True,
+                 basic: bool = True,
                  ):
         self.value = value
         self.description = description
@@ -47,6 +48,7 @@ class FileInput:
         self.max_size = max_size
         self.suffix = suffix
         self.required = required
+        self.basic = basic
 
     def check(self) -> bool:
         if (self.value is None or self.value == "") and self.required == False:
@@ -76,12 +78,14 @@ class StringInput:
                  min_length: int,
                  max_length: int,
                  choices: List[str],
+                 basic: bool = True,
                  ):
         self.value = value
         self.description = description
         self.min_length = min_length
         self.max_length = max_length
         self.choices = choices
+        self.basic = basic
 
     def check(self) -> bool:
         if not isinstance(self.value, str):
@@ -107,11 +111,13 @@ class FloatInput:
                  description: str,
                  min_value: float,
                  max_value: float,
+                 basic: bool = True,
                  ):
         self.value = value
         self.description = description
         self.min_value = min_value
         self.max_value = max_value
+        self.basic = basic
 
     def check(self) -> bool:
         if not isinstance(self.value, float):
@@ -131,11 +137,13 @@ class IntegerInput:
                  description: str,
                  min_value: int,
                  max_value: int,
+                 basic: bool = True,
                  ):
         self.value = value
         self.description = description
         self.min_value = min_value
         self.max_value = max_value
+        self.basic = basic
 
     def check(self) -> bool:
         if not isinstance(self.value, int):
@@ -153,9 +161,11 @@ class BooleanInput:
     def __init__(self, 
                  value: bool,
                  description: str,
+                 basic: bool = True,
                  ):
         self.value = value
         self.description = description
+        self.basic = basic
 
     def check(self) -> bool:
         if not isinstance(self.value, bool):
