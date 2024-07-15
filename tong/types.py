@@ -87,9 +87,9 @@ class StringInput:
         if not isinstance(self.value, str):
             raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
 
-        if len(choices)>0:
-            if not all([isinstance(choice, str) for choice in choices]):
-                raise TypeError(f"Expected {self.description} choices to be a list of strings, got {type(choices)}
+        if len(self.choices)>0:
+            if not all([isinstance(choice, str) for choice in self.choices]):
+                raise TypeError(f"Expected {self.description} choices to be a list of strings, got {type(choices)}")
             if self.value not in self.choices:
                 raise ValueError(f"Expected {self.description} to be one of {self.choices}, got {self.value}")
         else:
