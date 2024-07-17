@@ -191,6 +191,9 @@ class FileOutput:
         if not isinstance(self.value, str):
             raise TypeError(f"Expected {self.description} to be a string, got {type(self.value)}")
 
+        if not os.path.exists(self.value):
+            raise FileNotFoundError(f"File {self.value} not found")
+
         return True
 
 class FileOutputList:
